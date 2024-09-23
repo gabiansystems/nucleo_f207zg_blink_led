@@ -97,15 +97,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    HAL_GPIO_TogglePin(BLUE_GPIO_Port, BLUE_Pin);
-    HAL_Delay(100);
-    HAL_GPIO_TogglePin(BLUE_GPIO_Port, BLUE_Pin);
-    HAL_GPIO_TogglePin(GREEN_GPIO_Port, GREEN_Pin);
-    HAL_Delay(100);
-    HAL_GPIO_TogglePin(GREEN_GPIO_Port, GREEN_Pin);
-    HAL_GPIO_TogglePin(RED_GPIO_Port, RED_Pin);
-    HAL_Delay(100);
-    HAL_GPIO_TogglePin(RED_GPIO_Port, RED_Pin);
+    if (HAL_GPIO_ReadPin(BUTTON_GPIO_Port, BUTTON_Pin) == GPIO_PIN_SET)
+        HAL_GPIO_WritePin(BLUE_GPIO_Port, BLUE_Pin, GPIO_PIN_SET);
+    else
+        HAL_GPIO_WritePin(BLUE_GPIO_Port, BLUE_Pin, GPIO_PIN_RESET);
   }
   /* USER CODE END 3 */
 }
@@ -158,17 +153,24 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GREEN_Pin|RED_Pin|BLUE_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(BLUE_GPIO_Port, BLUE_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : GREEN_Pin RED_Pin BLUE_Pin */
-  GPIO_InitStruct.Pin = GREEN_Pin|RED_Pin|BLUE_Pin;
+  /*Configure GPIO pin : BUTTON_Pin */
+  GPIO_InitStruct.Pin = BUTTON_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(BUTTON_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : BLUE_Pin */
+  GPIO_InitStruct.Pin = BLUE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(BLUE_GPIO_Port, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
