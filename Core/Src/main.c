@@ -99,6 +99,13 @@ int main(void)
     /* USER CODE BEGIN 3 */
     HAL_GPIO_TogglePin(BLUE_GPIO_Port, BLUE_Pin);
     HAL_Delay(100);
+    HAL_GPIO_TogglePin(BLUE_GPIO_Port, BLUE_Pin);
+    HAL_GPIO_TogglePin(GREEN_GPIO_Port, GREEN_Pin);
+    HAL_Delay(100);
+    HAL_GPIO_TogglePin(GREEN_GPIO_Port, GREEN_Pin);
+    HAL_GPIO_TogglePin(RED_GPIO_Port, RED_Pin);
+    HAL_Delay(100);
+    HAL_GPIO_TogglePin(RED_GPIO_Port, RED_Pin);
   }
   /* USER CODE END 3 */
 }
